@@ -11,9 +11,11 @@ exports.sourceNodes = async (
   types.forEach(({ type, query }) => {
     query(supabase).then(({ data }) => {
       data.forEach(entry => {
+        const id = entry.id ? entry.id : entry[0]
+        
         createNode({
           ...entry,
-          id: createNodeId(`${type}-${entry.id}`),
+          id: createNodeId(`${type}-${id}`),
           parent: null,
           children: [],
           internal: {
